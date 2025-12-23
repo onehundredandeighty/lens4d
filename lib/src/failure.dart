@@ -63,7 +63,8 @@ class LensFailure implements Exception {
     : message = message ?? failures.map((f) => f.toString()).join(', ');
 
   /// Create a LensFailure from a single failure.
-  LensFailure.single(Failure failure, {
+  LensFailure.single(
+    Failure failure, {
     Exception? cause,
     Object? target,
     String? message,
