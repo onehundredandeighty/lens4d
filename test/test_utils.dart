@@ -5,9 +5,17 @@ class MockRequest {
   final Map<String, List<String>> queryParams;
   final String body;
 
-  const MockRequest({this.headers = const {}, this.queryParams = const {}, this.body = ''});
+  const MockRequest({
+    this.headers = const {},
+    this.queryParams = const {},
+    this.body = '',
+  });
 
-  MockRequest copyWith({Map<String, String>? headers, Map<String, List<String>>? queryParams, String? body}) {
+  MockRequest copyWith({
+    Map<String, String>? headers,
+    Map<String, List<String>>? queryParams,
+    String? body,
+  }) {
     return MockRequest(
       headers: headers ?? this.headers,
       queryParams: queryParams ?? this.queryParams,
@@ -37,7 +45,9 @@ final Header = BiDiLensSpec<MockRequest, String>(
 final Query = BiDiLensSpec<MockRequest, String>(
   'query',
   const StringParam(),
-  LensGet<MockRequest, String>((name, request) => request.queryParams[name] ?? []),
+  LensGet<MockRequest, String>(
+    (name, request) => request.queryParams[name] ?? [],
+  ),
   LensSet<MockRequest, String>((name, values, request) {
     final newQueryParams = Map<String, List<String>>.from(request.queryParams);
     if (values.isEmpty) {

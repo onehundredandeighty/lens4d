@@ -9,7 +9,7 @@ import 'meta.dart';
 import 'string_mappings.dart';
 
 /// Represents a bi-directional extraction of an entity from a target, or an insertion into a target.
-/// 
+///
 /// A BiDiLensSpec extends [LensSpec] with injection capabilities, allowing both extraction and
 /// insertion of values. It serves as a factory for creating concrete [BiDiLens] instances.
 class BiDiLensSpec<IN extends Object, OUT> extends LensSpec<IN, OUT>
@@ -17,7 +17,7 @@ class BiDiLensSpec<IN extends Object, OUT> extends LensSpec<IN, OUT>
   /// The injection function that sets values into the target.
   final LensSet<IN, OUT> set;
 
-  /// Create a new BiDiLensSpec with the specified location, parameter metadata, 
+  /// Create a new BiDiLensSpec with the specified location, parameter metadata,
   /// extraction function, and injection function.
   BiDiLensSpec(
     String location,
@@ -27,7 +27,7 @@ class BiDiLensSpec<IN extends Object, OUT> extends LensSpec<IN, OUT>
   ) : super(location, paramMeta, get);
 
   /// Create a LensSpec which applies the uni-directional transformation to the result.
-  /// 
+  ///
   /// When mapping with just one function (unidirectional), the result loses bidirectional
   /// capability and returns a regular [LensSpec] instead of a [BiDiLensSpec].
   @override
@@ -35,7 +35,7 @@ class BiDiLensSpec<IN extends Object, OUT> extends LensSpec<IN, OUT>
       LensSpec(location, paramMeta, get.map(nextIn));
 
   /// Create another BiDiLensSpec which applies the bi-directional transformations to the result.
-  /// 
+  ///
   /// Any resultant Lens can be used to extract or insert the final type from/into a target.
   BiDiLensSpec<IN, NEXT> mapBiDi<NEXT>(
     NEXT Function(OUT) nextIn,
@@ -46,12 +46,7 @@ class BiDiLensSpec<IN extends Object, OUT> extends LensSpec<IN, OUT>
     NEXT Function(OUT) nextIn,
     OUT Function(NEXT) nextOut,
     ParamMeta newParamMeta,
-  ) => BiDiLensSpec(
-      location,
-      newParamMeta,
-      get.map(nextIn),
-      set.map(nextOut),
-    );
+  ) => BiDiLensSpec(location, newParamMeta, get.map(nextIn), set.map(nextOut));
 
   BiDiLensSpec<IN, NEXT> mapWithMapping<NEXT>(BiDiMapping<OUT, NEXT> mapping) {
     return mapBiDi(mapping.fromIn, mapping.fromOut);
@@ -63,18 +58,18 @@ class BiDiLensSpec<IN extends Object, OUT> extends LensSpec<IN, OUT>
     OUT defaultValue, {
     String? description,
   }) => defaultedTo(
-      name,
-      Lens(
-        Meta(
-          required: false,
-          location: location,
-          paramMeta: paramMeta,
-          name: name,
-          description: description,
-        ),
-        (_) => defaultValue,
+    name,
+    Lens(
+      Meta(
+        required: false,
+        location: location,
+        paramMeta: paramMeta,
+        name: name,
+        description: description,
       ),
-    );
+      (_) => defaultValue,
+    ),
+  );
 
   @override
   BiDiLens<IN, OUT> defaultedTo(
@@ -83,8 +78,8 @@ class BiDiLensSpec<IN extends Object, OUT> extends LensSpec<IN, OUT>
     String? description,
   }) {
     final getLens = (IN target) => get(name, target);
-    final setLens = (String name, List<OUT> values, IN target) =>
-        set(name, values, target);
+    final setLens =
+        (String name, List<OUT> values, IN target) => set(name, values, target);
     return BiDiLens(
       Meta(
         required: false,
@@ -102,13 +97,10 @@ class BiDiLensSpec<IN extends Object, OUT> extends LensSpec<IN, OUT>
   }
 
   @override
-  BiDiLens<IN, OUT?> optional(
-    String name, {
-    String? description,
-  }) {
+  BiDiLens<IN, OUT?> optional(String name, {String? description}) {
     final getLens = (IN target) => get(name, target);
-    final setLens = (String name, List<OUT> values, IN target) =>
-        set(name, values, target);
+    final setLens =
+        (String name, List<OUT> values, IN target) => set(name, values, target);
     return BiDiLens(
       Meta(
         required: false,
@@ -127,10 +119,7 @@ class BiDiLensSpec<IN extends Object, OUT> extends LensSpec<IN, OUT>
   }
 
   @override
-  BiDiLens<IN, OUT> required(
-    String name, {
-    String? description,
-  }) {
+  BiDiLens<IN, OUT> required(String name, {String? description}) {
     final meta = Meta(
       required: true,
       location: location,
@@ -139,8 +128,8 @@ class BiDiLensSpec<IN extends Object, OUT> extends LensSpec<IN, OUT>
       description: description,
     );
     final getLens = (IN target) => get(name, target);
-    final setLens = (String name, List<OUT> values, IN target) =>
-        set(name, values, target);
+    final setLens =
+        (String name, List<OUT> values, IN target) => set(name, values, target);
     return BiDiLens(meta, (target) {
       final results = getLens(target);
       if (results.isEmpty) {
@@ -153,7 +142,8 @@ class BiDiLensSpec<IN extends Object, OUT> extends LensSpec<IN, OUT>
   BiDiLensBuilder<IN, List<OUT>> get multi => _MultiBiDiLensBuilder(this);
 }
 
-class _MultiBiDiLensBuilder<IN extends Object, OUT> implements BiDiLensBuilder<IN, List<OUT>> {
+class _MultiBiDiLensBuilder<IN extends Object, OUT>
+    implements BiDiLensBuilder<IN, List<OUT>> {
   final BiDiLensSpec<IN, OUT> _spec;
 
   _MultiBiDiLensBuilder(this._spec);
@@ -164,18 +154,18 @@ class _MultiBiDiLensBuilder<IN extends Object, OUT> implements BiDiLensBuilder<I
     List<OUT> defaultValue, {
     String? description,
   }) => defaultedTo(
-      name,
-      Lens(
-        Meta(
-          required: false,
-          location: _spec.location,
-          paramMeta: ArrayParam(_spec.paramMeta),
-          name: name,
-          description: description,
-        ),
-        (_) => defaultValue,
+    name,
+    Lens(
+      Meta(
+        required: false,
+        location: _spec.location,
+        paramMeta: ArrayParam(_spec.paramMeta),
+        name: name,
+        description: description,
       ),
-    );
+      (_) => defaultValue,
+    ),
+  );
 
   @override
   BiDiLens<IN, List<OUT>> defaultedTo(
@@ -184,8 +174,9 @@ class _MultiBiDiLensBuilder<IN extends Object, OUT> implements BiDiLensBuilder<I
     String? description,
   }) {
     final getLens = (IN target) => _spec.get(name, target);
-    final setLens = (String name, List<OUT> values, IN target) =>
-        _spec.set(name, values, target);
+    final setLens =
+        (String name, List<OUT> values, IN target) =>
+            _spec.set(name, values, target);
     return BiDiLens(
       Meta(
         required: false,
@@ -203,13 +194,11 @@ class _MultiBiDiLensBuilder<IN extends Object, OUT> implements BiDiLensBuilder<I
   }
 
   @override
-  BiDiLens<IN, List<OUT>?> optional(
-    String name, {
-    String? description,
-  }) {
+  BiDiLens<IN, List<OUT>?> optional(String name, {String? description}) {
     final getLens = (IN target) => _spec.get(name, target);
-    final setLens = (String name, List<OUT> values, IN target) =>
-        _spec.set(name, values, target);
+    final setLens =
+        (String name, List<OUT> values, IN target) =>
+            _spec.set(name, values, target);
     return BiDiLens(
       Meta(
         required: false,
@@ -227,10 +216,7 @@ class _MultiBiDiLensBuilder<IN extends Object, OUT> implements BiDiLensBuilder<I
   }
 
   @override
-  BiDiLens<IN, List<OUT>> required(
-    String name, {
-    String? description,
-  }) {
+  BiDiLens<IN, List<OUT>> required(String name, {String? description}) {
     final meta = Meta(
       required: true,
       location: _spec.location,
@@ -239,8 +225,9 @@ class _MultiBiDiLensBuilder<IN extends Object, OUT> implements BiDiLensBuilder<I
       description: description,
     );
     final getLens = (IN target) => _spec.get(name, target);
-    final setLens = (String name, List<OUT> values, IN target) =>
-        _spec.set(name, values, target);
+    final setLens =
+        (String name, List<OUT> values, IN target) =>
+            _spec.set(name, values, target);
     return BiDiLens(meta, (target) {
       final results = getLens(target);
       if (results.isEmpty) {
@@ -251,15 +238,13 @@ class _MultiBiDiLensBuilder<IN extends Object, OUT> implements BiDiLensBuilder<I
   }
 }
 
-
 /// Convenience extension methods for [BiDiLensSpec] that work with String values.
 ///
 /// These extensions provide type conversion capabilities, transforming string-based
 /// lens specs into lens specs for other types like int, double, bool, Uri, DateTime, etc.
 /// This corresponds to the Kotlin extension functions in lensSpec.kt.
 extension BiDiLensSpecExtensions<IN extends Object>
-on BiDiLensSpec<IN, String> {
-
+    on BiDiLensSpec<IN, String> {
   BiDiLensSpec<IN, String> string() => this;
 
   BiDiLensSpec<IN, String> nonEmptyString() =>
@@ -293,42 +278,42 @@ on BiDiLensSpec<IN, String> {
       mapWithMapping(StringBiDiMappings.regexObject());
 
   BiDiLensSpec<IN, List<T>> csv<T>(
-      String delimiter,
-      BiDiMapping<String, T> mapElement,
-      ) => mapWithMapping(StringBiDiMappings.csv(delimiter, mapElement));
+    String delimiter,
+    BiDiMapping<String, T> mapElement,
+  ) => mapWithMapping(StringBiDiMappings.csv(delimiter, mapElement));
 }
 
 extension BiDiLensSpecComposite<IN extends Object> on BiDiLensSpec<IN, String> {
   LensSpec<IN, T> composite<T extends Object>(
-      T Function(BiDiLensSpec<IN, String>, IN) getFn,
-      ) => LensSpec<IN, T>(
+    T Function(BiDiLensSpec<IN, String>, IN) getFn,
+  ) => LensSpec<IN, T>(
     T.toString(),
     const ObjectParam(),
     LensGet((_, target) => [getFn(this, target)]),
   );
 
   BiDiLensSpec<IN, T> compositeBiDi<T extends Object>(
-      T Function(BiDiLensSpec<IN, String>, IN) getFn,
-      IN Function(T, IN) setFn,
-      ) => BiDiLensSpec(
+    T Function(BiDiLensSpec<IN, String>, IN) getFn,
+    IN Function(T, IN) setFn,
+  ) => BiDiLensSpec(
     T.toString(),
     const ObjectParam(),
     LensGet((_, target) => [getFn(this, target)]),
     LensSet<IN, T>(
-          (_, values, target) =>
+      (_, values, target) =>
           values.fold(target, (acc, value) => setFn(value, acc)),
     ),
   );
 }
 
 /// Extension methods for chaining lens injections.
-/// 
+///
 /// This allows clean functional composition of lens modifications:
 /// ```dart
 /// // Single modifier
 /// final result = uri.having(Query.required('search').of('dart'));
-/// 
-/// // Multiple modifiers  
+///
+/// // Multiple modifiers
 /// final result = uri.havingAll([
 ///   Query.required('search').of('dart'),
 ///   Query.integer().required('limit').of(50),
@@ -338,8 +323,8 @@ extension BiDiLensSpecComposite<IN extends Object> on BiDiLensSpec<IN, String> {
 extension LensHavingModifiers<T> on T {
   /// Apply a single lens modifier function to this object.
   T having(T Function(T) modifier) => modifier(this);
-  
+
   /// Apply multiple lens modifier functions to this object in sequence.
-  T havingAll(List<T Function(T)> modifiers) => 
+  T havingAll(List<T Function(T)> modifiers) =>
       modifiers.fold(this, (memo, next) => next(memo));
 }

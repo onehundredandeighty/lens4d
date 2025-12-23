@@ -5,16 +5,16 @@ import 'lens_get_set.dart';
 import 'meta.dart';
 
 /// Represents a uni-directional extraction of an entity from a target.
-/// 
+///
 /// A LensSpec defines how to extract values from a target object at a specific location,
 /// with a particular parameter type. It serves as a factory for creating concrete [Lens] instances.
 class LensSpec<IN extends Object, OUT> implements LensBuilder<IN, OUT> {
   /// The location where this lens operates (e.g., 'header', 'query', 'body').
   final String location;
-  
+
   /// Metadata describing the expected parameter type.
   final ParamMeta paramMeta;
-  
+
   /// The extraction function that retrieves values from the target.
   final LensGet<IN, OUT> get;
 
@@ -22,7 +22,7 @@ class LensSpec<IN extends Object, OUT> implements LensBuilder<IN, OUT> {
   LensSpec(this.location, this.paramMeta, this.get);
 
   /// Create another LensSpec which applies the uni-directional transformation to the result.
-  /// 
+  ///
   /// Any resultant Lens can only be used to extract the final type from a target.
   LensSpec<IN, NEXT> map<NEXT>(NEXT Function(OUT) nextIn) =>
       LensSpec(location, paramMeta, get.map(nextIn));
@@ -33,18 +33,18 @@ class LensSpec<IN extends Object, OUT> implements LensBuilder<IN, OUT> {
     OUT defaultValue, {
     String? description,
   }) => defaultedTo(
-      name,
-      Lens(
-        Meta(
-          required: false,
-          location: location,
-          paramMeta: paramMeta,
-          name: name,
-          description: description,
-        ),
-        (_) => defaultValue,
+    name,
+    Lens(
+      Meta(
+        required: false,
+        location: location,
+        paramMeta: paramMeta,
+        name: name,
+        description: description,
       ),
-    );
+      (_) => defaultValue,
+    ),
+  );
 
   @override
   Lens<IN, OUT> defaultedTo(
@@ -120,18 +120,18 @@ class _MultiLensBuilder<IN extends Object, OUT>
     List<OUT> defaultValue, {
     String? description,
   }) => defaultedTo(
-      name,
-      Lens(
-        Meta(
-          required: false,
-          location: _spec.location,
-          paramMeta: ArrayParam(_spec.paramMeta),
-          name: name,
-          description: description,
-        ),
-        (_) => defaultValue,
+    name,
+    Lens(
+      Meta(
+        required: false,
+        location: _spec.location,
+        paramMeta: ArrayParam(_spec.paramMeta),
+        name: name,
+        description: description,
       ),
-    );
+      (_) => defaultValue,
+    ),
+  );
 
   @override
   Lens<IN, List<OUT>> defaultedTo(

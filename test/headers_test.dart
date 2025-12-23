@@ -71,7 +71,7 @@ void main() {
       final itemsLens = Header.csv(
         ',',
         StringBiDiMappings.integer(),
-      ).required(        'X-Items');
+      ).required('X-Items');
 
       final items = itemsLens(request);
       expect(items, [1, 2, 3, 4, 5]);
@@ -85,7 +85,7 @@ void main() {
       final request2 = MockRequest(headers: {'X-Count': '42'});
 
       final countLens = Header.integer().optional('X-Count');
-      
+
       expect(countLens(request1), isNull);
       expect(countLens(request2), 42);
     });

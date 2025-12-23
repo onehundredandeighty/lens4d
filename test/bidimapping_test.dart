@@ -77,7 +77,10 @@ void main() {
 
       expect(nonBlankMapping.fromIn('valid'), 'valid');
       expect(nonBlankMapping.fromOut('valid'), 'valid');
-      expect(() => nonBlankMapping.fromIn('   '), throwsA(isA<ArgumentError>()));
+      expect(
+        () => nonBlankMapping.fromIn('   '),
+        throwsA(isA<ArgumentError>()),
+      );
     });
   });
 }

@@ -4,7 +4,7 @@ import 'meta.dart';
 enum FailureType { invalid, missing, unsupported }
 
 /// Base class for all lens operation failures.
-/// 
+///
 /// Each failure contains the type of failure and the metadata of the lens that failed.
 sealed class Failure {
   final FailureType type;
@@ -42,19 +42,19 @@ class Unsupported extends Failure {
 }
 
 /// Exception thrown when lens operations fail.
-/// 
+///
 /// Contains a list of individual failures, an optional cause exception,
 /// the target object that was being processed, and a descriptive message.
 class LensFailure implements Exception {
   /// The individual failures that caused this exception.
   final List<Failure> failures;
-  
+
   /// The underlying exception that caused this failure, if any.
   final Exception? cause;
-  
+
   /// The target object that was being processed when the failure occurred.
   final Object? target;
-  
+
   /// A descriptive message about the failure.
   final String message;
 
@@ -71,7 +71,7 @@ class LensFailure implements Exception {
   }) : this([failure], cause: cause, target: target, message: message);
 
   /// Determine the overall failure type based on the contained failures.
-  /// 
+  ///
   /// Priority order: Unsupported > Invalid > Missing
   FailureType overall() {
     final types = failures.map((f) => f.type).toList();

@@ -35,7 +35,9 @@ void main() {
 
     test('should handle integer parsing failures in query params', () {
       final request = MockRequest(
-        queryParams: {'limit': ['not-a-number']},
+        queryParams: {
+          'limit': ['not-a-number'],
+        },
       );
 
       final limitLens = Query.integer().required('limit');

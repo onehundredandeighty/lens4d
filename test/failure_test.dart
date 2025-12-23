@@ -48,7 +48,7 @@ void main() {
   group('Lens Metadata', () {
     test('should provide correct metadata information', () {
       final lens = Header.integer().required('X-Timeout');
-      
+
       expect(lens.meta.required, true);
       expect(lens.meta.location, 'header');
       expect(lens.meta.name, 'X-Timeout');

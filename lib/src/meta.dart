@@ -47,7 +47,7 @@ class ArrayParam extends ParamMeta {
   final ParamMeta itemType;
 
   const ArrayParam(this.itemType) : super('array');
-  
+
   /// Returns the metadata for the item type.
   ParamMeta getItemType() => itemType;
 }
@@ -60,24 +60,24 @@ class EnumParam<T extends Enum> extends ParamMeta {
   const EnumParam(this.enumType) : super('string');
 }
 
-/// Metadata that describes a lens, including its name, location, type information, 
+/// Metadata that describes a lens, including its name, location, type information,
 /// and whether it's required.
-/// 
+///
 /// This corresponds to the Kotlin Meta data class but without the metadata map
 /// that was removed from the Dart implementation.
 class Meta {
   /// Whether this lens represents a required field.
   final bool required;
-  
+
   /// The location where this lens operates (e.g., 'header', 'query', 'body').
   final String location;
-  
+
   /// Metadata describing the expected parameter type.
   final ParamMeta paramMeta;
-  
+
   /// The name of the parameter this lens extracts/injects.
   final String name;
-  
+
   /// An optional human-readable description of this lens.
   final String? description;
 
