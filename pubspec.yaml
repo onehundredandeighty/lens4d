@@ -1,6 +1,6 @@
 name: lens4d
 version: 0.0.0
-description: Basic functional lens library. Build composable, reusable type-safe lenses.
+description: Functional lens library. Build composable, reusable type-safe lenses.
 repository: https://github.com/onehundredandeighty/lens4d
 environment:
   sdk: ^3.7.0
