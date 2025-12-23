@@ -1,4 +1,4 @@
-import '../lib/lens4d.dart';
+import '../../lib/lens4d.dart';
 
 /// example lens.
 final Query = BiDiLensSpec<Uri, String>(
