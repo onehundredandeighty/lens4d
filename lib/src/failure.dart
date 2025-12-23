@@ -29,8 +29,7 @@ class Invalid extends Failure {
   const Invalid(Meta meta) : super(FailureType.invalid, meta);
 
   @override
-  String toString() =>
-      "${meta.location} '${meta.name}' must be ${meta.paramMeta.description}";
+  String toString() => "${meta.location} '${meta.name}' must be ${meta.paramMeta.description}";
 }
 
 /// Represents a failure where a value was present but is not acceptable for the lens operation.
@@ -63,12 +62,8 @@ class LensFailure implements Exception {
     : message = message ?? failures.map((f) => f.toString()).join(', ');
 
   /// Create a LensFailure from a single failure.
-  LensFailure.single(
-    Failure failure, {
-    Exception? cause,
-    Object? target,
-    String? message,
-  }) : this([failure], cause: cause, target: target, message: message);
+  LensFailure.single(Failure failure, {Exception? cause, Object? target, String? message})
+    : this([failure], cause: cause, target: target, message: message);
 
   /// Determine the overall failure type based on the contained failures.
   ///
@@ -76,9 +71,7 @@ class LensFailure implements Exception {
   FailureType overall() {
     final types = failures.map((f) => f.type).toList();
     if (types.contains(FailureType.unsupported)) return FailureType.unsupported;
-    if (types.isEmpty || types.contains(FailureType.invalid))
-      return FailureType.invalid;
-    return FailureType.missing;
+    return types.isEmpty || types.contains(FailureType.invalid) ? FailureType.invalid : FailureType.missing;
   }
 
   @override
