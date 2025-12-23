@@ -108,7 +108,7 @@ void main() {
 
 ### Type Conversions
 
-Lenses support automatic type conversions:
+Lenses support automatic type conversions, which are extensible via extension methods:
 
 ```dart
 // String conversions
@@ -123,7 +123,6 @@ Query.decimal().required('price')         // double
 // Other conversions
 Query.boolean().required('enabled')       // bool
 Query.dateTime().required('created')      // DateTime
-Query.uri().required('callback')          // Uri
 ```
 
 ### Functional Composition
