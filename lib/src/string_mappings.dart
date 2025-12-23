@@ -60,7 +60,7 @@ class StringBiDiMappings {
         (d) => d.toIso8601String(),
       );
 
-  /// Bidirectional mapping between String and List<T> using CSV format.
+  /// Bidirectional mapping between String and List using CSV format.
   ///
   /// Splits strings by the specified delimiter and converts each element using
   /// the provided element mapping. Empty strings produce empty lists.
