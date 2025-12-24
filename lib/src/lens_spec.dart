@@ -1,4 +1,4 @@
-import 'failure.dart';
+import 'lens_failure.dart';
 import 'interfaces.dart';
 import 'lens.dart';
 import 'lens_get_set.dart';

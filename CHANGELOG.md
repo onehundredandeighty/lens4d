@@ -3,6 +3,9 @@
 This list is not intended to be all-encompassing - it will document major and breaking API
 changes with their rationale when appropriate:
 
+### v1.0.3
+- Renamed Failure to `LensFailureReason` to be more explicit.
+
 ### v1.0.2
 - Fixed typo in metadata.
 
