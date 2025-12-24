@@ -10,5 +10,3 @@ export 'src/lens_get_set.dart';
 export 'src/lens_spec.dart';
 export 'src/meta.dart';
 export 'src/string_mappings.dart';
-
-final a = Uri.parse("uri");
