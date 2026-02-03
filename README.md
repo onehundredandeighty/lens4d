@@ -1,6 +1,7 @@
 # lens4d
 
 [![Dart](https://img.shields.io/badge/dart-3.7%2B-blue)](https://dart.dev)
+[![Pub Version](https://img.shields.io/pub/v/lens4d.svg)](https://pub.dev/packages/lens4d)
 [![License](https://img.shields.io/badge/license-Apache2-green)](LICENSE)
 
 A functional lens library for Dart, enabling type-safe, composable data access and modification.
